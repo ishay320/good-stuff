@@ -1,0 +1,27 @@
+{
+	"enum": {
+		"prefix": "enum",
+		"body": [
+			"enum $1{",
+			"$0",
+			"};"
+		],
+		"description": "Enumeration"
+	},
+
+	"probe": {
+		"prefix": "probe",
+		"body": [
+			"std::cout << \"\\u001b[33m\" <<  __FILE__  << ':' <<__LINE__ << \" \" << ${1:\" *********** \"} << \"\\u001b[37m\" << __FUNCTION__ <<\"\\n\";"
+		],
+		"description": "probing statement"
+	},
+	
+	"assert": {
+		"prefix": "assert",
+		"body": [
+			"assert(false && \"function not implemented yet\");"
+		],
+		"description": "assert statement"
+	}
+}
