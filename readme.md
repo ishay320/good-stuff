@@ -6,6 +6,7 @@
 | `vscode-snippets`      | folder with good snippets for vscode                          |
 | `.clang-format`        | best format for c++                                           |
 | `commands.md`          | great commands                                                |
+| `links.md`             | great links                                                   |
 
 ## wireshark plugin for MavLink
 
