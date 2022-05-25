@@ -5,6 +5,7 @@
 | `mavlink_2_common.lua` | [wireshark plugin for MavLink](#wireshark-plugin-for-mavlink) |
 | `vscode-snippets`      | folder with good snippets for vscode                          |
 | `.clang-format`        | best format for c++                                           |
+| `commands.md`          | great commands                                                |
 
 ## wireshark plugin for MavLink
 
