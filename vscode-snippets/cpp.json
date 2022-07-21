@@ -12,7 +12,7 @@
 	"probe": {
 		"prefix": "probe",
 		"body": [
-			"std::cout << \"\\e[33m\" <<  __FILE__  << ':' <<__LINE__ << \" \" << ${1:\" *********** \"} << \" \\e[0m\" << __FUNCTION__ <<\"\\n\";"
+			"std::cout << \"\\e[3${2:3}m\" << __FILE__ << ':' << __LINE__ << \" \" << __FUNCTION__ << \" \\e[0m\" << ${1:\" *********** \"} << \"\\n\";"
 		],
 		"description": "probing statement"
 	},
