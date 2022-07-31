@@ -18,3 +18,26 @@
 | `!! `               | Execute the previous (most recently-executed) command.                                                                                                       |
 | `!?string[?]`       | Execute the most recent command containing the string _string_.<br> The trailing ? may be omitted if _string_ represents the end of the command in question. |
 | `^string1^string2^` | Repeat the previous command executed, replacing _string1_ with _string2_.<br> The previous command must contain _string1_.                                   |
+## beep
+can be use as reminder for finished command: `sleep 4; beep`
+
+### in linux:
+```sh
+beep
+echo -ne '\007'
+echo -e "\a"
+```
+
+### in wsl:
+```sh
+_beep () {
+  powershell.exe "[console]::beep($1,$2)"
+}
+
+alias bleep="_beep 1000 800"  # A strong bleep (for profanity)
+alias  beep="_beep 2000 300"  # Quick yet noticeable beep
+alias  blip="_beep 4000  80"  # A less distracting blip
+
+# or just
+powershell.exe '[console]::beep(1000,800)'
+```
