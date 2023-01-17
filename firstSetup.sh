@@ -17,5 +17,8 @@ timedatectl set-local-rtc 1 --adjust-system-clock
 
 # install vscode
 sudo snap install --classic code
-
 echo "Don't forget to go to setting and change the 'ctrl + alt + shift + up/down' to something else and then return them"
+
+sudo apt install copyq -y
+gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"
+echo "Don't forget to go to copyq setting and add 'super + v' shortcut and autostart"
