@@ -3,11 +3,12 @@
 | File                             | Description                                                   |
 | -------------------------------- | ------------------------------------------------------------- |
 | `mavlink_2_common.lua`           | [wireshark plugin for MavLink](#wireshark-plugin-for-mavlink) |
-| `vscode-snippets`                | folder with good snippets for vscode                          |
 | `.clang-format`                  | best format for c++                                           |
+| `vscode`                         | folder with stuff of vscode                                   |
 | [`commands.md`](commands.md)     | great commands                                                |
 | [`links.md`](links.md)           | great links                                                   |
 | [`cpp-code`](cpp-code/readme.md) | useful code for cpp                                           |
+| [`firstSetup.sh`](firstSetup.sh) | linux first opening setup                                     |
 
 ## wireshark plugin for MavLink
 
