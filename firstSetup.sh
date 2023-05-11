@@ -27,3 +27,32 @@ sudo apt install copyq -y
 gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"
 echo "Don't forget to go to copyq setting and add 'super + v' shortcut and autostart"
 echo "You need to fix the autostart :  in ~/.config/autostart/copyq.desktop: Exec=env QT_QPA_PLATFORM=xcb copyq"
+
+## Insert custom less colors for man
+
+# Path to the startup file
+startup_file="$HOME/.bashrc"
+
+# Check if the colors are already added
+if grep -Fxq "# Custom less colors" "$startup_file"; then
+    echo "Colors already added to $startup_file"
+else
+    cat <<EOF >>"$startup_file"
+# Custom less colors
+default=\$(tput sgr0)
+red=\$(tput setaf 1)
+green=\$(tput setaf 2)
+purple=\$(tput setaf 5)
+orange=\$(tput setaf 9)
+
+export PAGER=less
+export LESS_TERMCAP_mb=\${red}
+export LESS_TERMCAP_md=\${orange}
+export LESS_TERMCAP_me=\${default}
+export LESS_TERMCAP_se=\${default}
+export LESS_TERMCAP_so=\${purple}
+export LESS_TERMCAP_ue=\${default}
+export LESS_TERMCAP_us=\${green}
+EOF
+    echo "Colors added to $startup_file"
+fi
