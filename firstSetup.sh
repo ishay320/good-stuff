@@ -6,7 +6,7 @@ sudo apt install -y \
     git cmake make gcc g++ clang gdb valgrind \
     python3 python-is-python3 \
     wget curl nodejs \
-    gnuplot-qt tmux
+    gnuplot-qt tmux htop
 
 # install chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -56,3 +56,13 @@ export LESS_TERMCAP_us=\${green}
 EOF
     echo "Colors added to $startup_file"
 fi
+
+## Custom tmux setting
+
+TMUX_CONF="${HOME}"/.tmux.conf
+cat <<EOF >>"${TMUX_CONF}"
+set -g mouse on
+EOF
+
+tmux source "${TMUX_CONF}"
+
