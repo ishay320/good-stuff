@@ -5,8 +5,8 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y \
     git cmake make gcc g++ clang gdb valgrind \
     python3 python-is-python3 \
-    wget nodejs \
-    gnuplot-qt
+    wget curl nodejs \
+    gnuplot-qt tmux
 
 # install chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
