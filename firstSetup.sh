@@ -66,6 +66,7 @@ EOF
 TMUX_CONF="${HOME}"/.tmux.conf
 cat <<EOF >>"${TMUX_CONF}"
 set -g mouse on
+set -s set-clipboard external
 EOF
 
 tmux source "${TMUX_CONF}"
