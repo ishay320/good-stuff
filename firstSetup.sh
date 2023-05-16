@@ -6,7 +6,8 @@ sudo apt install -y \
     git cmake make gcc g++ clang gdb valgrind \
     python3 python-is-python3 \
     wget curl nodejs \
-    gnuplot-qt tmux htop
+    gnuplot-qt tmux htop \
+    xclip
 
 # install chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -66,7 +67,8 @@ EOF
 TMUX_CONF="${HOME}"/.tmux.conf
 cat <<EOF >>"${TMUX_CONF}"
 set -g mouse on
-set -s set-clipboard external
+set -s set-clipboard off
+set -s copy-command 'xclip -i -sel clipboard'
 EOF
 
 tmux source "${TMUX_CONF}"
