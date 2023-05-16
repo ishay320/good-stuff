@@ -15,7 +15,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 
 # fix the clock desync
-timedatectl set-local-rtc 1 --adjust-system-clock
+timedatectl set-local-rtc 0
 
 # install vscode
 sudo snap install --classic code
