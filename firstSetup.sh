@@ -58,12 +58,6 @@ EOF
     echo "Colors added to $startup_file"
 fi
 
-## Custom tmux setting
-cat <<EOF >>"$startup_file"
-# Less scrall in tmux
-export LESS='--mouse'
-EOF
-
 TMUX_CONF="${HOME}"/.tmux.conf
 cat <<EOF >>"${TMUX_CONF}"
 set -g mouse on
