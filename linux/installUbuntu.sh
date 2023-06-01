@@ -15,7 +15,7 @@ sudo dpkg -i google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 
 # fix the clock desync
-timedatectl set-local-rtc 1 --adjust-system-clock
+timedatectl set-local-rtc 0
 
 # install vscode
 sudo snap install --classic code
@@ -57,12 +57,6 @@ export LESS_TERMCAP_us=\${green}
 EOF
     echo "Colors added to $startup_file"
 fi
-
-## Custom tmux setting
-cat <<EOF >>"$startup_file"
-# Less scrall in tmux
-export LESS='--mouse'
-EOF
 
 TMUX_CONF="${HOME}"/.tmux.conf
 cat <<EOF >>"${TMUX_CONF}"
