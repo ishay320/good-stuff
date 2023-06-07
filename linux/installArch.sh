@@ -3,7 +3,7 @@
 sudo pacman -Syu
 sudo pacman -S \
 	git cmake make gcc clang gdb valgrind \
-	python3 nodejs \
+	python3 nodejs npm \
 	wget curl wireshark-qt \
 	gnuplot tmux xclip htop \
 	man-pages man-db xdg-utils \
@@ -16,15 +16,36 @@ cd ./yay-git || exit 1
 makepkg -si
 cd .. # ./yay-git
 
-# install chrome
+# Install chrome
 yay -S google-chrome
 
-# install vscode
+# Install vscode
 yay -S visual-studio-code-bin
-echo "remove shortcut using 'dconf-editor' for use in vscode - org.gnome.desktop.wm.keybindings"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['']"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['']"
 
-# add the terminal `kgx` to open on `ctrl+alt+T`
-# add dash and desktop icons via gnome-extensions
+# Gnome seting
+gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
 
-# fix `xdg-open` open code instead of nautilus
+# Add copyq on super+V and terminal on ctrl+alt+T
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'terminal'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kgx'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>t'
+
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'copyq'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'copyq show'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>v'
+
+# Fix for copyq shortcut
+gsettings set org.gnome.shell.keybindings toggle-message-tray "['']"
+
+# Add dash and desktop icons via gnome-extensions
+
+# Fix `xdg-open` open code instead of nautilus
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
+
+# Man database re cache
+sudo mandb
+
+// TODO: add lazyvim installation and my custom setting
