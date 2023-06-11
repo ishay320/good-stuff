@@ -24,12 +24,12 @@ shopt -s checkwinsize
 shopt -s histappend
 
 case ${TERM} in
-	xterm*|rxvt*|Eterm|aterm|kterm|gnome*)
-		PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-		;;
-	screen)
-		PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
-		;;
+xterm* | rxvt* | Eterm | aterm | kterm | gnome*)
+	PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+	;;
+screen)
+	PROMPT_COMMAND=${PROMPT_COMMAND:+$PROMPT_COMMAND; }'printf "\033_%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"'
+	;;
 esac
 
 # fortune is a simple program that displays a pseudorandom message
@@ -51,19 +51,19 @@ match_lhs=""
 
 [[ -f ~/.dir_colors ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
 [[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
-[[ -z ${match_lhs} ]] \
-	&& type -P dircolors >/dev/null \
-	&& match_lhs=$(dircolors --print-database)
+[[ -z ${match_lhs} ]] &&
+	type -P dircolors >/dev/null &&
+	match_lhs=$(dircolors --print-database)
 
-if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] ; then
+if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]]; then
 
 	# we have colors :-)
 
 	# Enable colors for ls, etc. Prefer ~/.dir_colors
-	if type -P dircolors >/dev/null ; then
-		if [[ -f ~/.dir_colors ]] ; then
+	if type -P dircolors >/dev/null; then
+		if [[ -f ~/.dir_colors ]]; then
 			eval $(dircolors -b ~/.dir_colors)
-		elif [[ -f /etc/DIR_COLORS ]] ; then
+		elif [[ -f /etc/DIR_COLORS ]]; then
 			eval $(dircolors -b /etc/DIR_COLORS)
 		fi
 	fi
@@ -109,23 +109,23 @@ unset safe_term match_lhs
 
 # less colors
 export LESS_TERMCAP_mb=$'\E[01;31m' \
-LESS_TERMCAP_md=$'\E[01;38;5;74m' \
-LESS_TERMCAP_me=$'\E[0m' \
-LESS_TERMCAP_se=$'\E[0m' \
-LESS_TERMCAP_so=$'\E[38;5;246m' \
-LESS_TERMCAP_ue=$'\E[0m' \
-LESS_TERMCAP_us=$'\E[04;38;5;146m'
+	LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+	LESS_TERMCAP_me=$'\E[0m' \
+	LESS_TERMCAP_se=$'\E[0m' \
+	LESS_TERMCAP_so=$'\E[0;33m' \
+	LESS_TERMCAP_ue=$'\E[0m' \
+	LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
 if [ "$PS1" ]; then
-    complete -cf sudo
+	complete -cf sudo
 fi
 
 # alias
 alias ls='ls --color=auto'
 alias ll='ls -alF'
+alias ifconfig='ip addr'
 
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 
-export HISTTIMEFORMAT="$(echo -e "\e[1;36m")[%d/%m %H:%M:%S]$(echo -e "\e[m") "
-
+# export HISTTIMEFORMAT="$(echo -e "\e[1;36m")[%d/%m %H:%M:%S]$(echo -e "\e[m") "

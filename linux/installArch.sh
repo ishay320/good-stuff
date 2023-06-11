@@ -44,6 +44,8 @@ gsettings set org.gnome.shell.keybindings toggle-message-tray "['']"
 
 # Fix `xdg-open` open code instead of nautilus
 xdg-mime default org.gnome.Nautilus.desktop inode/directory
+xdg-mime default nvim.desktop application/x-shellscript
+xdg-mime default nvim.desktop text/plain
 
 # Man database re cache
 sudo mandb
