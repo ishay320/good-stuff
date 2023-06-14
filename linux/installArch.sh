@@ -16,6 +16,9 @@ cd ./yay-git || exit 1
 makepkg -si
 cd .. # ./yay-git
 
+# Hebrew fonts
+yay -S ttf-ms-fonts culmus
+
 # Install chrome
 yay -S google-chrome
 
