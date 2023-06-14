@@ -51,3 +51,5 @@ xdg-mime default nvim.desktop text/plain
 sudo mandb
 
 // TODO: add lazyvim installation and my custom setting
+python -m pip install neovim
+sudo pacman -S lazygit
