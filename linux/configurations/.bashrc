@@ -22,6 +22,7 @@ shopt -s checkwinsize
 
 # Enable history appending instead of overwriting.
 shopt -s histappend
+export HISTCONTROL=ignoreboth:erasedups
 
 case ${TERM} in
 xterm* | rxvt* | Eterm | aterm | kterm | gnome*)
@@ -129,3 +130,7 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # export HISTTIMEFORMAT="$(echo -e "\e[1;36m")[%d/%m %H:%M:%S]$(echo -e "\e[m") "
+
+if [[ "$TERM" = xterm ]]; then
+	TERM=xterm-256color
+fi
