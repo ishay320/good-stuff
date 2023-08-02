@@ -134,3 +134,6 @@ export EDITOR="$VISUAL"
 if [[ "$TERM" = xterm ]]; then
 	TERM=xterm-256color
 fi
+
+export PATH=${PATH}:/opt/cuda/bin/
+export LD_LIBRARY_PATH=/opt/cuda/lib64/:$LD_LIBRARY_PATH

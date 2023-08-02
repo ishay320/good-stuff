@@ -56,3 +56,6 @@ sudo mandb
 // TODO: add lazyvim installation and my custom setting
 python -m pip install neovim
 sudo pacman -S lazygit
+
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
