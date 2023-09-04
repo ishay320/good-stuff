@@ -7,7 +7,8 @@ sudo pacman -S \
 	wget curl wireshark-qt \
 	gnuplot tmux xclip htop \
 	man-pages man-db xdg-utils \
-	bash-completion copyq
+	bash-completion copyq \
+	dosfstools
 
 sudo pacman -S --needed base-devel
 
