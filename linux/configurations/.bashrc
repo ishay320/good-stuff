@@ -22,6 +22,7 @@ shopt -s checkwinsize
 
 # Enable history appending instead of overwriting.
 shopt -s histappend
+# Ignore double commands in history
 export HISTCONTROL=ignoreboth:erasedups
 
 case ${TERM} in
