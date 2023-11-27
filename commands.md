@@ -8,6 +8,17 @@
 
 `git config --global alias.adog 'log --all --decorate --oneline --graph'`
 
+### show the biggest files in git
+
+```sh
+git rev-list --objects --all |
+  git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' |
+  sed -n 's/^blob //p' |
+  sort --numeric-sort --key=2 |
+  cut -c 1-12,41- |
+  $(command -v gnumfmt || echo numfmt) --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
+```
+
 ## History commands and shortcuts
 
 | command             | explenation                                                                                                                                                  |
@@ -18,8 +29,10 @@
 | `!! `               | Execute the previous (most recently-executed) command.                                                                                                       |
 | `!?string[?]`       | Execute the most recent command containing the string _string_.<br> The trailing ? may be omitted if _string_ represents the end of the command in question. |
 | `^string1^string2^` | Repeat the previous command executed, replacing _string1_ with _string2_.<br> The previous command must contain _string1_.                                   |
+
 ## beep
 can be use as reminder for finished command: `sleep 4; beep`
+
 
 ### in linux:
 ```sh
