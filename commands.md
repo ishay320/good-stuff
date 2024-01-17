@@ -31,10 +31,11 @@ git rev-list --objects --all |
 | `^string1^string2^` | Repeat the previous command executed, replacing _string1_ with _string2_.<br> The previous command must contain _string1_.                                   |
 
 ## beep
+
 can be use as reminder for finished command: `sleep 4; beep`
 
-
 ### in linux:
+
 ```sh
 beep
 echo -ne '\007'
@@ -42,6 +43,7 @@ echo -e "\a"
 ```
 
 ### in wsl:
+
 ```sh
 _beep () {
   powershell.exe "[console]::beep($1,$2)"
@@ -53,4 +55,39 @@ alias  blip="_beep 4000  80"  # A less distracting blip
 
 # or just
 powershell.exe '[console]::beep(1000,800)'
+```
+
+## core dump
+
+`core dump` outputting all the gdb data of the program when system killing error occur.
+
+### how to enable it for one run
+
+```sh
+# set the limit of the core dump file to unlimited
+$ ulimit -S -c unlimited
+
+# set the path to save the files
+$ sudo sysctl -w kernel.core_pattern=/coredumps/core-%e-%s-%u-%g-%p-%t
+```
+
+### how to enable it permanently
+
+`/etc/security/limits.conf` to update system limit
+
+```
+* soft core 0
+* hard core 0
+```
+
+`/etc/sysctl.conf`
+
+```
+kernel.core_pattern="/coredumps/core-%e-%s-%u-%g-%p-%t"
+```
+
+### how to use it
+
+```sh
+$ gdb <run file> <dump file>
 ```
