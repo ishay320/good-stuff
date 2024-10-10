@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# pacman settings
+sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
+sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+
 sudo pacman -Syu
 sudo pacman -S \
 	git cmake make gcc clang gdb valgrind \
@@ -60,3 +64,9 @@ sudo pacman -S lazygit
 
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
+
+sudo pacman -S gnome-browser-connector
+
+yay -S otf-firamono-nerd
+# TODO: set the font
+sudo pacman -S bear
