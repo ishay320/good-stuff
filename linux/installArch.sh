@@ -1,72 +1,94 @@
 #!/usr/bin/env bash
 
-# pacman settings
-sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
-sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+# Exit on error and log all actions
+set -e
+exec > >(tee -i arch_installation.log)
+exec 2>&1
 
-sudo pacman -Syu
-sudo pacman -S \
-	git cmake make gcc clang gdb valgrind \
-	python3 nodejs npm \
-	wget curl wireshark-qt \
-	gnuplot tmux xclip htop \
-	man-pages man-db xdg-utils \
-	bash-completion copyq \
-	dosfstools
+echo "=== Arch Linux Installation Script ==="
 
-sudo pacman -S --needed base-devel
+# Function to configure pacman settings
+configure_pacman() {
+	echo "Configuring pacman settings..."
+	sudo sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 10/' /etc/pacman.conf
+	sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+}
 
-git clone https://aur.archlinux.org/yay-git.git
-cd ./yay-git || exit 1
-makepkg -si
-cd .. # ./yay-git
+# Function to install packages with pacman
+install_pacman_packages() {
+	echo "Updating system and installing base packages..."
+	sudo pacman -Syu --noconfirm
+	sudo pacman -S --noconfirm --needed \
+		git cmake make gcc clang gdb valgrind \
+		python3 nodejs npm wget curl wireshark-qt \
+		gnuplot tmux xclip htop man-pages man-db \
+		xdg-utils bash-completion copyq dosfstools \
+		base-devel lazygit bear
+}
 
-# Hebrew fonts
-yay -S ttf-ms-fonts culmus
+# Function to install yay (AUR helper)
+install_yay() {
+	echo "Installing yay (AUR helper)..."
+	git clone https://aur.archlinux.org/yay-git.git
+	cd yay-git || exit 1
+	makepkg -si --noconfirm
+	cd .. && rm -rf yay-git
+}
 
-# Install chrome
-yay -S google-chrome
+# Function to install AUR packages
+install_aur_packages() {
+	echo "Installing AUR packages..."
+	yay -S --noconfirm ttf-ms-fonts culmus google-chrome visual-studio-code-bin otf-firamono-nerd
+}
 
-# Install vscode
-yay -S visual-studio-code-bin
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['']"
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['']"
+# Function to configure GNOME settings
+configure_gnome() {
+	echo "Configuring GNOME settings..."
+	gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+	gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['']"
+	gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['']"
 
-# Gnome seting
-gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+	# Custom keybindings
+	gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'terminal'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kgx'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>t'
 
-# Add copyq on super+V and terminal on ctrl+alt+T
-gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'terminal'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'kgx'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Control><Alt>t'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'copyq'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'copyq show'
+	gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>v'
 
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name 'copyq'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command 'copyq show'
-gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding '<Super>v'
+	# Fix for copyq shortcut
+	gsettings set org.gnome.shell.keybindings toggle-message-tray "['']"
+}
 
-# Fix for copyq shortcut
-gsettings set org.gnome.shell.keybindings toggle-message-tray "['']"
+# Function to configure xdg-mime settings
+configure_xdg() {
+	echo "Configuring xdg-open defaults..."
+	xdg-mime default org.gnome.Nautilus.desktop inode/directory
+	xdg-mime default nvim.desktop application/x-shellscript
+	xdg-mime default nvim.desktop text/plain
+}
 
-# Add dash and desktop icons via gnome-extensions
+# Function to enable and start services
+configure_services() {
+	echo "Enabling and starting services..."
+	sudo systemctl enable bluetooth.service
+	sudo systemctl start bluetooth.service
+}
 
-# Fix `xdg-open` open code instead of nautilus
-xdg-mime default org.gnome.Nautilus.desktop inode/directory
-xdg-mime default nvim.desktop application/x-shellscript
-xdg-mime default nvim.desktop text/plain
+# Function to update the man database
+update_man_db() {
+	echo "Updating man database..."
+	sudo mandb
+}
 
-# Man database re cache
-sudo mandb
-
-// TODO: add lazyvim installation and my custom setting
-python -m pip install neovim
-sudo pacman -S lazygit
-
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
-
-sudo pacman -S gnome-browser-connector
-
-yay -S otf-firamono-nerd
-# TODO: set the font
-sudo pacman -S bear
+configure_pacman
+install_pacman_packages
+install_yay
+install_aur_packages
+configure_gnome
+configure_xdg
+configure_services
+update_man_db
+echo "Installation and configuration complete!"
