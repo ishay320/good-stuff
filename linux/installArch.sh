@@ -38,7 +38,7 @@ install_yay() {
 # Function to install AUR packages
 install_aur_packages() {
 	echo "Installing AUR packages..."
-	yay -S --noconfirm ttf-ms-fonts culmus google-chrome visual-studio-code-bin otf-firamono-nerd
+	yay -S --noconfirm ttf-ms-fonts culmus google-chrome visual-studio-code-bin otf-firamono-nerd ttf-3270-nerd
 }
 
 # Function to configure GNOME settings
@@ -83,10 +83,17 @@ update_man_db() {
 	sudo mandb
 }
 
+# Function to set custom fonts
+set_custom_fonts() {
+	echo "Setting custom font (FiraMono Nerd Font)..."
+	gsettings set org.gnome.desktop.interface monospace-font-name 'FiraMono Nerd Font Mono 10'
+}
+
 configure_pacman
 install_pacman_packages
 install_yay
 install_aur_packages
+set_custom_fonts
 configure_gnome
 configure_xdg
 configure_services
