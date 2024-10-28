@@ -95,7 +95,7 @@ $ gdb <run file> <dump file>
 ### how to use x11 with sudo
 
 ```sh
-$ sudo xauth add $(xauth -f ~username/.Xauthority list|tail -1)
+$ sudo xauth add $(xauth -f ~/.Xauthority list|tail -1)
 ```
 
 replace `username` with username
