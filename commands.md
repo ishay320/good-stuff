@@ -98,8 +98,6 @@ $ gdb <run file> <dump file>
 $ sudo xauth add $(xauth -f ~/.Xauthority list|tail -1)
 ```
 
-replace `username` with username
-
 ## set date
 
 ```sh
