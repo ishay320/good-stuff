@@ -21,8 +21,8 @@ sudo snap install --classic code
 gsettings set org.gnome.shell.keybindings move-to-workspace-up "[]"
 gsettings set org.gnome.shell.keybindings move-to-workspace-down "[]"
 # or if they fail:
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "[]"
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "[]"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "[]"
+gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "[]""[]"
 echo "Check that the 'ctrl + alt + shift + up/down' hase been removed"
 
 echo "Download the newest in https://github.com/hluk/CopyQ"
